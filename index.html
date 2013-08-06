@@ -1,0 +1,177 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+
+	<title>ye gbpltw</title>
+
+	<!-- 
+		im@andreystarkov.ru
+	-->	
+	
+	<meta http-equiv="content-type" content="text/html;charset=utf-8" />
+	
+	<link rel="stylesheet" href="css/reset.css" type="text/css" media="screen" />
+	
+	<script type="text/javascript" src="js/jquery.js"></script>
+	<script type="text/javascript" src="js/easing.js"></script>
+	<script type="text/javascript" src="js/backgroundposition.js"> </script>
+	<script type="text/javascript" src="js/css-transform.js"> </script>
+	<script type="text/javascript" src="js/rotate.js"> </script>
+	<script type="text/javascript" src="js/buzz.js"></script>
+	
+	<style type="text/css">
+		body { background: url(bg.png) repeat; padding:0; margin:0; overflow: hidden }
+		
+		.eblo { z-index: 100; position: absolute; bottom: -3000px; left: 100px; background: url(eblong.png) center center; width: 639px; height:1466px; }
+		
+		#box1 { opacity: 0; z-index: 10; width: 227px; height: 225px; background: url(box2.png) center center; position: absolute; }
+		#box2 { opacity: 0; z-index: 40; width: 227px; height: 225px; background: url(box3.png) center center; position: absolute; }
+		#box3 { opacity: 0; z-index: 150; width: 293px; height: 293px; background: url(box1.png) center center; position: absolute; }
+		#box4 { opacity: 0; z-index: 30; width: 293px; height: 293px; background: url(box4.png) center center; position: absolute; }
+		#box5 { opacity: 0; z-index: 250; width: 293px; height: 293px; background: url(box5.png) center center; position: absolute; }
+		#box6 { opacity: 0; z-index: 50; width: 293px; height: 293px; background: url(box4.png) center center; position: absolute; }
+		#box7 { opacity: 0; z-index: 150; width: 293px; height: 293px; background: url(box5.png) center center; position: absolute; }
+		
+		.noize { z-index: 2000; opacity: 0.8; width: 100%; height: 100%; position: absolute; background:url(n.png) repeat; }
+		.noize-sharp { z-index: 40; opacity: 0.8; width: 100%; height: 100%; position: absolute; background:url(n1.png) repeat; }
+		.cloud { z-index: 5; left: -500px; width: 567px; height: 375px; background: url(cloud.png) center center; position: absolute }
+	</style>
+	
+	<script type="text/javascript">
+	
+	
+	function pc_rand(){
+		return Math.random() * (2000 - 1) + 1;
+	}
+	
+	
+	function mm_rand(min, max){
+		return Math.random() * (max - min) + min;
+	}
+	
+	function eblo(){
+	 $('.eblo').animate({"bottom": mm_rand(-1800, -1600)+"px" }, 3000, function(){  
+	 $('.eblo').animate({"left": "+=600px", rotate: mm_rand(-60, 60)}, 20000);
+	   $('.eblo').delay(mm_rand(2000, 10000)).animate({rotate: mm_rand(-40, 40)+'deg'}, mm_rand(300, 3000), function() { 
+			$('.eblo').animate({rotate: '0deg'}, 1000, function() {  
+					$('.eblo').animate({ "bottom": "-3000px", rotate: mm_rand(-100, 100)+'deg'}, mm_rand(1000, 10000), function() { 
+							 $('.eblo').css({'left': mm_rand(1, 1000)+'px'}).animate({ rotate: '0deg', "bottom":  mm_rand(-1800, -1200)+"px" }, 5000, function() {
+											$('.eblo').delay(mm_rand(100, 5000)).animate({ rotate: mm_rand(-180, 180)+'deg', "bottom": "-3000px" }, 4000, function() {				
+															eblo();					
+											});
+											});
+						
+							});
+			});
+	
+	 }); 
+	});
+    }
+	
+	function clouds_activity(selector){
+		selector.animate({"left": "30%", "opacity": 1}, mm_rand(3000, 30000), function(){
+			selector.animate({scale: mm_rand(0.8, 1.3), "opacity": mm_rand(0.5, 1),"left":"40%"}, 4000, function(){
+				selector.animate({"left":"120%"}, mm_rand(1000, 20000), function(){
+					selector.css({"top": mm_rand(20, 200)+"px", opacity: 0.2, "left": "-600px"});
+						selector.animate({scale: mm_rand(0.8, 1.3)}, 100, function(){
+							clouds_activity(selector);
+						});		
+					});
+				});
+			});
+	}
+	
+	function smoke_layers(selector) {
+	  selector.animate({backgroundPosition:"("+mm_rand(10, 40)+"% "+mm_rand(10, 40)+"%)"}, mm_rand(3000, 10000), 'linear', function(){ 
+				selector.animate({ rotate: mm_rand(-50, 50)+'deg'}, 8000, function(){
+						smoke_layers(selector); 
+				});
+		}); 
+	}
+	
+	function make_alive(selector){	
+
+		selector.animate({rotate: mm_rand(20, 700)+'deg'}, mm_rand(4000, 11360));
+		selector.animate({"left": mm_rand(0, screen.width)+"px", "top": mm_rand(0, screen.height)+"px" }, big_rand(), function(){ 
+			selector.css({"z-index": mm_rand(10, 200)}).animate({scale: mm_rand(0.5, 1.7)}, 300, function(){			
+					selector.fadeTo(1000, mm_rand(0.7, 1), function(){
+						make_alive(selector); 
+					});		
+				});
+			}); 
+	}
+	
+	function big_rand(){
+		return Math.random() * (15000 - 100) + 100;
+	}
+	
+	function bg_ani(){
+		$('body').animate({backgroundPosition:"("+mm_rand(1, 40)+"% "+mm_rand(1, 40)+"%)"}, mm_rand(3000, 10000), 'linear', function(){ 
+				$('body').animate({ rotate: mm_rand(-5, 5)+'deg'}, 4000, function(){
+						bg_ani(); 
+				});
+		}); 
+	}
+	
+	$(document).ready(function() {
+
+
+			//bg_ani();
+			eblo();	
+		
+		
+			$(".noize").click(function(){		
+					$(".eblo").animate({rotate: "180deg", "bottom": "-1500px"}, 2000, function(){
+				
+				   
+					});
+			});	
+			
+			var song1 = new buzz.sound( "sound/1", {formats: [ "ogg", "mp3", "acc" ]});
+			song1.loop().play().fadeIn(); 
+
+			$('#box1').css({'left': pc_rand()+'px', 'top': pc_rand()+'px'});
+			$('#box2').css({'left': pc_rand()+'px', 'top': pc_rand()+'px'});
+			$('#box3').css({'left': pc_rand()+'px', 'top': pc_rand()+'px'});
+			$('#box4').css({'left': pc_rand()+'px', 'top': pc_rand()+'px'});
+			$('#box5').css({'left': pc_rand()+'px', 'top': pc_rand()+'px'});
+			$('#box6').css({'left': pc_rand()+'px', 'top': pc_rand()+'px'});
+			$('#box7').css({'left': pc_rand()+'px', 'top': pc_rand()+'px'});
+	 
+			/* $('#box1').fadeTo(3000, mm_rand(0, 1)); $('#box2').fadeTo(3000, mm_rand(0, 1)); $('#box3').fadeTo(3000, mm_rand(0, 1));
+			 $('#box4').fadeTo(3000, mm_rand(0, 1)); $('#box5').fadeTo(3000, mm_rand(0, 1)); $('#box6').fadeTo(3000, mm_rand(0, 1));
+			 $('#box7').fadeTo(3000, mm_rand(0, 1));*/
+			 
+			 make_alive($('#box1'));  
+			 make_alive($('#box2')); 
+			 make_alive($('#box3'));   
+			 make_alive($('#box4'));  
+			 make_alive($('#box5'));  
+			 make_alive($('#box6'));
+			 make_alive($('#box7')); 	 
+
+				clouds_activity($('.cloud'));
+
+			smoke_layers($('.noize'));
+			smoke_layers($('.noize-sharp'));	
+			
+	});
+	</script>
+</head>
+<body>
+<div class="noize"></div><div class="noize-sharp"></div>
+
+<div style="width: 100%; height: 100%;  position: relative">
+
+<div class="eblo"></div>
+<div class="lifeform" id="box1"></div>
+<div class="lifeform" id="box2"></div>
+<div class="lifeform" id="box3"></div>
+<div class="lifeform" id="box4"></div>
+<div class="lifeform" id="box5"></div>
+<div class="lifeform" id="box6"></div>
+<div class="lifeform" id="box7"></div><div class="cloud"></div>
+</div>
+	</div>
+</body>
+</html>
